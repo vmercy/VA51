@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 from numpy.lib.type_check import imag
 
-inputImageFilename = 'otsu1'
+inputImageFilename = 'otsu4'
 image = cv2.imread('ressources/otsu/%s.png' % inputImageFilename, cv2.IMREAD_GRAYSCALE)
 image = np.array(image)
 
@@ -53,7 +53,7 @@ def math_sum(start, end, callable):
   return sum
 
 def wb(T):
-  return math_sum(0,T,'p')
+  return math_sum(0,T,'p')+0.0001 #FIXME: division by zero error with otsu4
 
 def nxpn(T):
   return T*p(T)
