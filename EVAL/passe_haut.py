@@ -51,14 +51,13 @@ def maskAllButSquareCenter(img, size):
   return newImg
 
 if __name__ == "__main__":
-  im = cv2.imread('ressources/road1.png',cv2.IMREAD_GRAYSCALE)
+  im = cv2.imread('ressources/route1_bruit1.png',cv2.IMREAD_GRAYSCALE)
   im_fft = np.fft.fft2(im)
   im_fft = np.fft.fftshift(im_fft)
   spectrum = getSpectrum(im_fft)
-  filtered = maskAllButSquareCenter(im_fft,50)
-  filteredSpectrum = maskAllButSquareCenter(spectrum,50)
+  filtered = maskAllButSquareCenter(im_fft,200)
+  filteredSpectrum = maskAllButSquareCenter(spectrum,200)
   cv2.imwrite('fft.png',filteredSpectrum)
   inverted = np.fft.ifft2(filtered)
   inverted = np.abs(inverted)
-  print(inverted)
-  cv2.imwrite('filteredCenterSquareOnly.png',inverted)
+  cv2.imwrite('passe_haut.png',inverted)

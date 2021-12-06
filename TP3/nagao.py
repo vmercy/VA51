@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+import sys
 
 def rotateMatrix90DegreesCW(matrix):
   """Rotates a matrix by 90 degrees clockwise
@@ -29,12 +30,29 @@ def buildNagaoWindows():
     windows.append(np.array(corner))
   return windows
 
-def writeNagaoWindows(nagaoWindows):
+""" def writeNagaoWindows(nagaoWindows):
   for index, window in enumerate(nagaoWindows):
-    cv2.imwrite("nagaoWindows/%s.png"%index, 255*np.array(window))
+    cv2.imwrite("nagaoWindows/%s.png"%index, 255*np.array(window)) """
 
 def Variance(matrix):
   return np.var(matrix)
+
+def progress(count, total, status=''):
+  """Display a progress bar on terminal
+
+  Args:
+      count (int): The increment
+      total (int): The maximum value of count
+      status (str, optional): Optional status. Defaults to ''.
+  """
+  bar_len = 60
+  filled_len = int(round(bar_len * count / float(total)))
+
+  percents = round(100.0 * count / float(total), 1)
+  bar = '=' * filled_len + '-' * (bar_len - filled_len)
+
+  sys.stdout.write('[%s] %s%s ...%s\r' % (bar, percents, '%', status))
+  sys.stdout.flush()
 
 if __name__ == "__main__":
   nagaoWindows = buildNagaoWindows()
@@ -56,5 +74,5 @@ if __name__ == "__main__":
       newPixelValue = np.mean(pixelMul)
       newIm[row,column] = newPixelValue
       inc+=1
-      print('Processing pixel %i of %i : %4.2f %%'%(inc,totalPixels,100*inc/totalPixels))
+      progress(inc,totalPixels)
   cv2.imwrite('nagaoFiltered.png',newIm)
